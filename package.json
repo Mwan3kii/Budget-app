@@ -26,5 +26,8 @@
     "express": "^4.21.0",
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "bcryptjs": "^2.4.3"
   }
 }
