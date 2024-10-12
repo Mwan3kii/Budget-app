@@ -2,8 +2,8 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize('budget_app', 'root', '', {
     host: 'localhost',
-    dialect: '',
-    logging: 'false' // disable logging of sql queries
+    dialect: 'mysql',
+    logging: false // disable logging of sql queries
 });
 
 sequelize.authenticate()

@@ -1,7 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const validator = require('validator');
-const sequelize = require('../config/sequelize')
-const bycrypt = require('bcryptjs');
+const sequelize = require('../config/sequelize');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 class User extends Model {
     // gets categories made by user
@@ -9,6 +10,16 @@ class User extends Model {
         return await this.getCategories({
             order: [['createdAt', 'DESC']]
         })
+    }
+
+    getJwToken() {
+        return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES_TIME
+        });
+    }
+
+    async comparePassword(enteredPassword) {
+        return await bcrypt.compare(enteredPassword, this.password);
     }
 }
 
@@ -21,8 +32,8 @@ User.init({
                 msg: 'Please enter your name'
             },
             len: {
-                args: [0,50],
-                msg: 'Name should not exceed 100 characters'
+                args: [0, 255],
+                msg: 'Name should not exceed 255 characters'
             }
         }
     },
@@ -35,6 +46,19 @@ User.init({
             },
             notEmpty: {
                 msg: 'Please enter email to proceed.'
+            }
+        }
+    },
+    bio: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Please enter your name',
+            },
+            len: {
+                args: [0, 255],
+                msg: 'Your bio cannot exceed 255 characters'
             }
         }
     },
@@ -54,13 +78,13 @@ User.init({
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
-    },
+    }
 }, {sequelize,
     modelName: 'User',
     hooks: {
         beforeCreate: async (user) => {
             if (user.password) {
-                user.password = await bycrypt.hash(user.password, 10) // determines computation complexity of hashing higher means secure
+                user.password = await bcrypt.hash(user.password, 10) // determines computation complexity of hashing higher means secure
             }
         }
     }
