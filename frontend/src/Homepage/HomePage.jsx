@@ -3,7 +3,7 @@ import Aside from '../Header/Aside';
 import Menu from '../Header/Menu';
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect} from "react";
-import { displayCategory } from '../Redux/UserCategories/categoriesSlice';
+import { displayCategories } from '../Redux/UserCategories/categoriesSlice';
 import DisplayCategories from './DisplayCategories';
 import './HomePage.css';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(displayCategory());
+    dispatch(displayCategories());
   }, [dispatch]);
   const { loading, success, categories, error } = useSelector((state) => state.categories);
 

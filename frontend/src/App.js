@@ -5,6 +5,7 @@ import Register from './Authentication/Register';
 import Login from './Authentication/Login';
 import HomePage from './Homepage/HomePage';
 import CategoryPage from './Homepage/CategoryPage';
+import CategoryDetails from './Homepage/CategoryDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/home' element={<HomePage/>}/>
           <Route path="/category" element={<CategoryPage />} />
+          <Route path='/home/:id' element={<CategoryDetails/>}/>
         </Routes>
       </Router>
     </div>

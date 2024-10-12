@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory } from '../Redux/UserCategories/categoriesSlice';
+import { createCategory, displayCategories } from '../Redux/UserCategories/categoriesSlice';
 import "../Authentication/Auth.css";
-
+import { useNavigate } from 'react-router-dom';
 
 const CategoryPage = ({ name, description }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, success, error} = useSelector((state)=> state.categories);
   const [newCategory, setNewCategory] = useState({
@@ -33,10 +34,15 @@ const CategoryPage = ({ name, description }) => {
     try {
       dispatch(createCategory(userData));
       setSubmitted(true);
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
+    dispatch(displayCategories());
   };
+
   return (
     <form onSubmit={handleSubmit}>
       {loading ? (

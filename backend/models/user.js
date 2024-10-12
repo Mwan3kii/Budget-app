@@ -91,7 +91,7 @@ User.init({
 });
 
 User.associate = (models) => {
-    User.hasMany(models.Category, {foreignKey: 'user_id'});
+    User.hasMany(models.Category);
     User.hasMany(models.Transaction, {foreignKey: 'author_id', sourceKey: 'id'});
 }
 

@@ -4,6 +4,7 @@ const auth = require('./routes/auth');
 const category = require('./routes/category');
 const cors = require('cors');
 app.use(express.json());
+const transaction = require('./routes/transaction');
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -24,5 +25,6 @@ app.use(cors(corsOptions))
 
 app.use('/api/v1', auth);
 app.use('/api/v1', category);
+app.use('/api/v1', transaction);
 
 module.exports = app;

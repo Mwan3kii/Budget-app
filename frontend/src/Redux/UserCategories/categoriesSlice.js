@@ -8,8 +8,8 @@ const initialState = {
     loading: false,
 }
 
-export const displayCategory = createAsyncThunk('displayCategory/all', async () => {
-        const baseAPI = 'http://localhost:4000/api/v1/category';
+export const displayCategories = createAsyncThunk('displayCategory/all', async () => {
+        const baseAPI = 'http://localhost:4000/api/v1/home';
         try {
             const response = await axios.get(baseAPI);
             
@@ -38,15 +38,15 @@ const categoriesSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(displayCategory.pending, (state)=>{
+            .addCase(displayCategories.pending, (state)=>{
                 state.loading = true; 
             })
-            .addCase(displayCategory.fulfilled, (state, action)=> {
+            .addCase(displayCategories.fulfilled, (state, action)=> {
                 state.categories = action.payload;
                 state.loading = false;
                 state.success = true;
             })
-            .addCase(displayCategory.rejected, (state, action) => {
+            .addCase(displayCategories.rejected, (state, action) => {
                 state.loading = false;
                 state.success = false;
                 state.error = action.payload
