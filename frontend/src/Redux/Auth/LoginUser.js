@@ -9,17 +9,22 @@ const initialState = {
 }
 
 export const loginUser = createAsyncThunk('auth/login', async (userData) => {
-        const loginAPI = 'http://localhost:4000/api/v1/login';
-        try {
-            const response = await axios.post(loginAPI, userData);
-            
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching series:', error);
-            return [];
+    const loginAPI = 'http://localhost:4000/api/v1/login';
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }
+    const response = await axios.post(`${loginAPI}`, userData, config);
+    try {
+        if (response.data) {
+            localStorage.setItem('user logged-in', JSON.stringify(response.data));
         }
-    },
-)
+        return response.data;
+    } catch (error) {
+        return response.data;
+    }
+});
 
 const loginSlice = createSlice({
     name: 'Login-user',

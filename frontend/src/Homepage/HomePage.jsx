@@ -1,0 +1,40 @@
+import React from 'react'
+import Aside from '../Header/Aside';
+import Menu from '../Header/Menu';
+import { useDispatch, useSelector } from "react-redux";
+import {useEffect} from "react";
+import { displayCategory } from '../Redux/UserCategories/categoriesSlice';
+import DisplayCategories from './DisplayCategories';
+import './HomePage.css';
+import { useNavigate } from 'react-router-dom';
+
+const HomePage = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(displayCategory());
+  }, [dispatch]);
+  const { loading, success, categories, error } = useSelector((state) => state.categories);
+
+  const navigate = useNavigate();
+  const handleAddCategory = () => {
+    navigate('/category');
+  };
+   
+  return (
+    <div className='main-content'>
+        <Menu/>
+          <div className='display-movies'>
+          {loading ?(<div class="spinner-border"></div>
+          ) :  (categories.map((item)=>(
+            <DisplayCategories item={item} key={item.id}/>
+          )))
+          }
+      </div>
+      <button onClick={handleAddCategory} className="btn btn-primary">
+        Add New Category
+      </button>
+    </div>
+  );
+};
+
+export default HomePage;

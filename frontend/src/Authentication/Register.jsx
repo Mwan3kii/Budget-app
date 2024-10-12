@@ -3,6 +3,7 @@ import { useState } from "react";
 import { registerUser } from "../Redux/Auth/RegisterUser";
 import { useDispatch, useSelector } from "react-redux";
 import "../Authentication/Auth.css";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -10,7 +11,6 @@ const Register = () => {
     const [values, setValues] = useState({
         name: "",
         email: "",
-        photo: "",
         bio: "",
         password: ""
     });
@@ -30,13 +30,13 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (values.name && values.email && values.bio && values.photo && values.password) {
+        if (values.name && values.email && values.bio && values.password) {
           setValid(true);
         }
+        
         const userData = {
           email: values.email,
           name: values.name,
-          photo: values.photo,
           bio: values.bio,
           password: values.password
         }
@@ -48,6 +48,10 @@ const Register = () => {
         }
         
       };
+      const navigate = useNavigate();
+      if (success) {
+        navigate('/home');
+      }
 
     return (
     <div className="form-container">
@@ -80,17 +84,6 @@ const Register = () => {
             placeholder="Name"
             name="name"
             value={values.name}
-            onChange={handleInputChange}
-          />
-        )}
-
-        {!valid && (
-          <input
-            className="form-field"
-            type="text"
-            placeholder="Photo Link"
-            name="photo"
-            value={values.photo}
             onChange={handleInputChange}
           />
         )}

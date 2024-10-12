@@ -1,4 +1,5 @@
 const { Model, DataTypes} = require('sequelize');
+const sequelize = require('../config/sequelize');
 
 class Category extends Model{
 }
@@ -8,9 +9,9 @@ Category.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    icon: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: True
+        allowNull: false
     },
     createdAt: {
         type: DataTypes.DATE,

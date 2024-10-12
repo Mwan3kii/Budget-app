@@ -3,6 +3,7 @@ import { useState } from "react";
 import { loginUser } from "../Redux/Auth/LoginUser";
 import { useDispatch, useSelector } from "react-redux";
 import "../Authentication/Auth.css";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (values.name && values.email && values.bio && values.photo && values.password) {
+        if (values.name && values.email && values.password) {
           setValid(true);
         }
         const userData = {
@@ -42,8 +43,12 @@ const Login = () => {
         } catch (err) {
           console.log(err);
         }
-        
       };
+      const navigate = useNavigate();
+      if (success) {
+        navigate('/home');
+      }
+        
 
     return (
     <div className="login-container">

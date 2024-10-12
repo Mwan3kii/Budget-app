@@ -1,4 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/sequelize');
+
 
 class Transaction extends Model {
 
