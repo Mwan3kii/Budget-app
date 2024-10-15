@@ -24,7 +24,7 @@ Transaction.init({
 
 Transaction.associate = (models) => {
     Transaction.belongsTo(models.User, {as: 'author', foreignKey: 'author_id'});
-    Transaction.belongsToMany(models.Category);
+    Transaction.belongsTo(models.Category);
 }
 
 module.exports = Transaction;

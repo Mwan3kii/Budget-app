@@ -32,6 +32,17 @@ export const createCategory = createAsyncThunk('createCategory', async (useData)
     }
 });
 
+export const deleteCategory = createAsyncThunk('deleteCategory', async (id) => {
+    const baseAPI = 'http://localhost:4000/api/v1/home';
+    try {
+        const response = await axios.delete(`${baseAPI}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        throw error;
+    }
+});
+
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
@@ -63,6 +74,11 @@ const categoriesSlice = createSlice({
                 state.loading = false;
                 state.success = false;
                 state.error = action.payload;
+            })
+            .addCase(deleteCategory.fulfilled, (state, action)=>{
+                state.categories = action.payload;
+                state.loading = false;
+                state.success = true;
             });
     }
 })

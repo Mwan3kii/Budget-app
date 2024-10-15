@@ -22,7 +22,7 @@ Category.init({
 });
 
 Category.associate = (models) => {
-    Category.belongsToMany(models.Transaction);
+    Category.hasMany(models.Transaction);
     Category.belongsTo(models.User);
 }
 

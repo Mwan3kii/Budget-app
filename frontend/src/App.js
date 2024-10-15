@@ -6,11 +6,13 @@ import Login from './Authentication/Login';
 import HomePage from './Homepage/HomePage';
 import CategoryPage from './Homepage/CategoryPage';
 import CategoryDetails from './Homepage/CategoryDetails';
+import Menu from './Header/Menu';
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <Menu />
         <Routes>
           <Route path="/" element={<SplashScreen />} />
           <Route path='/signup' element={<Register/>}/>

@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import { createTransaction } from '../Redux/Transactions/transactionSlice';
+import { displaySingleTransaction } from '../Redux/Transactions/displayTransactions';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const Transaction = ({categoryId}) => {
+
+const Transaction = ({ categoryId }) => {
+    console.log(categoryId);
     const dispatch = useDispatch();
     const [newTransaction, setNewTransaction] = useState({
         name: '',
@@ -11,20 +15,24 @@ const Transaction = ({categoryId}) => {
     const handleAddTransaction = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
-        setNewTransaction((newTransaction) => ({
-            ...newTransaction,
+        setNewTransaction((prevTransaction) => ({
+            ...prevTransaction,
             [name]: value
         }));
     };
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const transactionData = {
             name: newTransaction.name,
-            amount: newTransaction.amount
+            amount: newTransaction.amount,
+            categoryId: categoryId
         };
-        dispatch(createTransaction({ id: categoryId, transactionData })); 
-        setNewTransaction({ name: '', amount: '' }); // Reset the state
+        dispatch(createTransaction({ id: categoryId, transactionData }));
+        dispatch(displaySingleTransaction(categoryId));
+        navigate(`/home/${categoryId}`);
+        // setNewTransaction({ name: '', amount: '' }); // Reset the state
     };
 
     return (
@@ -46,7 +54,7 @@ const Transaction = ({categoryId}) => {
                                     name="name"
                                     value={newTransaction.name}
                                     onChange={handleAddTransaction}
-                                    required 
+                                    required
                                 />
                             </div>
                             <div className="mb-3">
@@ -54,18 +62,18 @@ const Transaction = ({categoryId}) => {
                                 <input
                                     type="number"
                                     className="form-control"
-                                    id="transactionAmount" 
+                                    id="transactionAmount"
                                     name="amount"
                                     value={newTransaction.amount}
                                     onChange={handleAddTransaction}
                                     required
                                 />
                             </div>
-                        </form>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" className="btn btn-primary">Save Transaction</button>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" className="btn btn-primary">Save Transaction</button>
+                            </div>
+                        </form>       
                     </div>
                 </div>
             </div>

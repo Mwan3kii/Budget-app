@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { displaySingleCategory } from '../Redux/UserCategories/singleCategorySlice';
 import Transaction from './Transaction';
 import { createTransaction } from '../Redux/Transactions/transactionSlice';
+import { displaySingleTransaction } from '../Redux/Transactions/displayTransactions';
 
 const CategoryDetails = () => {
     const { id } = useParams();
@@ -13,11 +14,14 @@ const CategoryDetails = () => {
 
     useEffect(() => {
         dispatch(displaySingleCategory(id));
-        dispatch(createTransaction(id));
+        // dispatch(createTransaction(id));
+        console.log('Current Transactions:', singleTran);
+        dispatch(displaySingleTransaction(id));
     }, [dispatch, id]);
 
     const { loading, success, category, error } = useSelector((state) => state.singleCategory);
-    const { transactions } = useSelector((state) => state.transactions);
+    // const { transaction } = useSelector((state) => state.transactions);
+    const { singleTran } = useSelector((state) => state.displayTransaction);
 
 
     return (
@@ -33,12 +37,13 @@ const CategoryDetails = () => {
                         <p>{category.description}</p>
                         <h4>Transactions</h4>
                         <ul>
-                            {loading ? (<div class="spinner-border"></div>
-                            ) : (transactions.map((transaction, index) => (
-                                <li key={index}>
-                                    {transaction.name} - ${transaction.amount}
+                            {singleTran ? (
+                                <li>
+                                    <h2>{singleTran.name}</h2>
+                                    <p>Amount: Ksh{singleTran.amount}</p>
                                 </li>
-                            ))
+                            ) : (
+                                <p>No transactions available.</p>
                             )}
                         </ul>
 

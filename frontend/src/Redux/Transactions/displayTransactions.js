@@ -2,40 +2,39 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-    transaction: {},
+    singleTran: {},
     success: false,
     error: null,
     loading: false
 }
 
-export const createTransaction = createAsyncThunk('displayTransaction', async ({id, transactionData})=> {
+export const displaySingleTransaction = createAsyncThunk('displayCategory/single', async (categoryId)=> {
     const baseAPI = 'http://localhost:4000/api/v1/home';
         try {
-            const response = await axios.post(`${baseAPI}/${id}/transaction`, transactionData);
+            const response = await axios.get(`${baseAPI}/${categoryId}`);
             const singleProd = response.data;
-            return { ...singleProd, categoryId: id };
+            return singleProd;
         } catch (error) {
             console.error('Error fetching single series:', error);
             return [];
         }
 });
 
-
-const transactionSlice = createSlice({
-    name: 'transaction',
+const displayTransactionSlice = createSlice({
+    name: 'showSingleCategory',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(createTransaction.pending, (state)=>{
+            .addCase(displaySingleTransaction.pending, (state)=>{
                 state.loading = true; 
             })
-            .addCase(createTransaction.fulfilled, (state, action)=> {
-                state.transaction = action.payload;
+            .addCase(displaySingleTransaction.fulfilled, (state, action)=> {
+                state.singleTran = action.payload;
                 state.loading = false;
                 state.success = true;
             })
-            .addCase(createTransaction.rejected, (state, action) => {
+            .addCase(displaySingleTransaction.rejected, (state, action) => {
                 state.loading = false;
                 state.success = false;
                 state.error = action.payload
@@ -43,4 +42,4 @@ const transactionSlice = createSlice({
     }
 })
 
-export default transactionSlice.reducer;
+export default displayTransactionSlice.reducer;

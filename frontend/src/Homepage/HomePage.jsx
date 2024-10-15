@@ -2,7 +2,7 @@ import React from 'react'
 import Aside from '../Header/Aside';
 import Menu from '../Header/Menu';
 import { useDispatch, useSelector } from "react-redux";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { displayCategories } from '../Redux/UserCategories/categoriesSlice';
 import DisplayCategories from './DisplayCategories';
 import './HomePage.css';
@@ -19,21 +19,24 @@ const HomePage = () => {
   const handleAddCategory = () => {
     navigate('/category');
   };
-   
+  console.log(categories);
   return (
-    <div className='main-content'>
-        <Menu/>
-          <div className='display-movies'>
-          {loading ?(<div class="spinner-border"></div>
-          ) :  (categories.map((item)=>(
-            <DisplayCategories item={item} key={item.id}/>
-          )))
+      <div className='main-content'>
+        <Aside />
+        <div className='display-movies'>
+          {/* <h1 style={{ marginLeft: '50px' }}>Categories</h1> */}
+          {loading ? (<div class="spinner-border"></div>
+          ) : (
+            categories.map((item) => (
+              <DisplayCategories item={item} key={item.id} />
+            ))
+          )
           }
+        </div>
+        {/* <button onClick={handleAddCategory} className="btn btn-primary">
+          Add New Category
+        </button> */}
       </div>
-      <button onClick={handleAddCategory} className="btn btn-primary">
-        Add New Category
-      </button>
-    </div>
   );
 };
 
