@@ -35,6 +35,11 @@ exports.categoryDetails = catchAsyncError(async (req, res, next) => {
 
   const totalAmount = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
 
+  await Category.update(
+    {totalamount: totalAmount},
+    {where: { id }}
+  )
+
   res.status(200).json({
     success: true,
     category,
