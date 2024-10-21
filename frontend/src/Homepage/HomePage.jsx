@@ -19,7 +19,7 @@ const HomePage = () => {
   const handleAddCategory = () => {
     navigate('/category');
   };
-  console.log(categories);
+  
   return (
       <div className='main-content'>
         <Aside />

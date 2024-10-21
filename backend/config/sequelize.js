@@ -1,7 +1,8 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize('budget_app', 'root', '', {
+const sequelize = new Sequelize('budget_app', 'root', 'MySql@._2006', {
     host: 'localhost',
+    port: 3307,
     dialect: 'mysql',
     logging: false // disable logging of sql queries
 });

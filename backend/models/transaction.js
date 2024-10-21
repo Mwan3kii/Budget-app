@@ -14,6 +14,15 @@ Transaction.init({
     amount: {
         type: DataTypes.INTEGER
     },
+    category_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'categories',  
+            key: 'id'             
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+    },
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

@@ -14,14 +14,11 @@ const CategoryDetails = () => {
 
     useEffect(() => {
         dispatch(displaySingleCategory(id));
-        // dispatch(createTransaction(id));
-        console.log('Current Transactions:', singleTran);
-        dispatch(displaySingleTransaction(id));
     }, [dispatch, id]);
 
     const { loading, success, category, error } = useSelector((state) => state.singleCategory);
     // const { transaction } = useSelector((state) => state.transactions);
-    const { singleTran } = useSelector((state) => state.displayTransaction);
+    const singleTran = category?.transactions;
 
 
     return (
@@ -31,17 +28,20 @@ const CategoryDetails = () => {
                 {loading ? (<div class="spinner-border"></div>) : (<>
                     <div className="col-12 col-md-5">
                         <h4>Category Name</h4>
-                        <p>{category.name}</p>
+                        <p>{category?.category?.name}</p>
 
                         <h4>Description</h4>
-                        <p>{category.description}</p>
+                        <p>{category?.category?.description}</p>
                         <h4>Transactions</h4>
                         <ul>
-                            {singleTran ? (
-                                <li>
-                                    <h2>{singleTran.name}</h2>
-                                    <p>Amount: Ksh{singleTran.amount}</p>
+                            {singleTran && singleTran.length >0 ? (
+                                singleTran.map((tran) => (
+                                    <li key={tran.id}>
+                                    <h2>{tran.name}</h2>
+                                    <p>Amount: Ksh{tran.amount}</p>
                                 </li>
+                                ))
+                                
                             ) : (
                                 <p>No transactions available.</p>
                             )}
