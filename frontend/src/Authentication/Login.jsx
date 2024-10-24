@@ -9,7 +9,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const { loading, success, error } = useSelector((state) => state.loginuser);
     const [values, setValues] = useState({
-        name: "",
         email: "",
         password: ""
     });
@@ -29,12 +28,11 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (values.name && values.email && values.password) {
+        if (values.email && values.password) {
           setValid(true);
         }
         const userData = {
           email: values.email,
-          name: values.name,
           password: values.password
         }
         try {
@@ -70,17 +68,6 @@ const Login = () => {
             placeholder="Email"
             name="email"
             value={values.email}
-            onChange={handleInputChange}
-          />
-        )}
-
-        {!valid && (
-          <input
-            className="form-field"
-            type="text"
-            placeholder="Name"
-            name="name"
-            value={values.name}
             onChange={handleInputChange}
           />
         )}

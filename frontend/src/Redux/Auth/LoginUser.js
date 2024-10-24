@@ -11,10 +11,9 @@ const initialState = {
 export const loginUser = createAsyncThunk('auth/login', async (userData) => {
     const loginAPI = 'http://localhost:4000/api/v1/login';
     const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    }
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true, // Include cookies with the request
+    };
     const response = await axios.post(`${loginAPI}`, userData, config);
     try {
         if (response.data) {
