@@ -12,7 +12,7 @@ const sendToken = (user, statusCode, res) => {
         ),
         httpOnly: true,
         secure: process.env.NODE_ENV === 'DEVELOPMENT',
-        sameSite: 'None'
+        sameSite: 'strict'
     };
 
     res.status(statusCode).cookie('token', token, options).json({

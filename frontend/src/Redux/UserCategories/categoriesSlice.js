@@ -8,18 +8,21 @@ const initialState = {
     loading: false,
 }
 
-export const displayCategories = createAsyncThunk('displayCategory/all', async () => {
-        const baseAPI = 'http://localhost:4000/api/v1/home';
-        try {
-            const response = await axios.get(baseAPI);
-            
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching series:', error);
-            return [];
-        }
-    },
-)
+export const displayCategories = createAsyncThunk('displayCategory/all', async (_, { rejectWithValue }) => {
+    const baseAPI = 'http://localhost:4000/api/v1/home';
+    try {
+        const config = {
+            withCredentials: true, 
+        };
+
+        const response = await axios.get(baseAPI, config);
+
+        return response.data; 
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return rejectWithValue('Failed to load categories'); 
+    }
+});
 
 export const createCategory = createAsyncThunk('createCategory', async (useData) => {
     const baseAPI = 'http://localhost:4000/api/v1/category';

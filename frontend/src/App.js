@@ -1,6 +1,7 @@
 import './App.css';
 import SplashScreen from './LandingPage/SplashScreen';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './Authentication/ProtectedRoute';
 import Register from './Authentication/Register';
 import Login from './Authentication/Login';
 import HomePage from './Homepage/HomePage';
@@ -17,9 +18,11 @@ function App() {
           <Route path="/" element={<SplashScreen />} />
           <Route path='/signup' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/home' element={<HomePage/>}/>
-          <Route path="/category" element={<CategoryPage />} />
-          <Route path='/home/:id' element={<CategoryDetails/>}/>
+          <Route element={<ProtectedRoute/>}>
+            <Route path='/home' element={<HomePage/>}/>
+            <Route path="/category" element={<CategoryPage />} />
+            <Route path='/home/:id' element={<CategoryDetails/>}/>
+          </Route>
         </Routes>
       </Router>
     </div>
