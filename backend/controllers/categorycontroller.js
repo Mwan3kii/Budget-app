@@ -72,7 +72,6 @@ exports.categoryDetails = catchAsyncError(async (req, res, next) => {
 });
 
 exports.deleteCategory = catchAsyncError(async (req, res, next) => {
-  console.log("Received data from frontend:", req.params);
   const { id } = req.params;
 
   const category = await Category.destroy({

@@ -27,7 +27,13 @@ export const displayCategories = createAsyncThunk('displayCategory/all', async (
 export const createCategory = createAsyncThunk('createCategory', async (useData) => {
     const baseAPI = 'http://localhost:4000/api/v1/category';
     try {
-        const response = await axios.post(baseAPI, useData);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true, // Include cookies with the request
+        };
+        const response = await axios.post(baseAPI, useData, config);
         return response.data;
     } catch (error) {
         console.error('Error creating category:', error);
@@ -38,7 +44,10 @@ export const createCategory = createAsyncThunk('createCategory', async (useData)
 export const deleteCategory = createAsyncThunk('deleteCategory', async (id) => {
     const baseAPI = 'http://localhost:4000/api/v1/home';
     try {
-        const response = await axios.delete(`${baseAPI}/${id}`);
+        const config = {
+            withCredentials: true, // Include cookies with the request
+        };
+        const response = await axios.delete(`${baseAPI}/${id}`, config);
         return response.data;
     } catch (error) {
         console.error('Error deleting category:', error);
@@ -82,6 +91,11 @@ const categoriesSlice = createSlice({
                 state.categories = action.payload;
                 state.loading = false;
                 state.success = true;
+            })
+            .addCase(deleteCategory.rejected, (state, action)=> {
+                state.success = false;
+                state.error = action.payload;
+                state.loading = false
             });
     }
 })

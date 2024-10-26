@@ -8,6 +8,7 @@ import HomePage from './Homepage/HomePage';
 import CategoryPage from './Homepage/CategoryPage';
 import CategoryDetails from './Homepage/CategoryDetails';
 import Menu from './Header/Menu';
+import Profile from './Authentication/Profile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<SplashScreen />} />
           <Route path='/signup' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/profile' element={<Profile/>}/>
           <Route element={<ProtectedRoute/>}>
             <Route path='/home' element={<HomePage/>}/>
             <Route path="/category" element={<CategoryPage />} />

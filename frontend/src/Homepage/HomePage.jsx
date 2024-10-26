@@ -27,7 +27,7 @@ const HomePage = () => {
         <Aside />
         <div className='display-movies'>
           {/* <h1 style={{ marginLeft: '50px' }}>Categories</h1> */}
-          {loading ? (<div class="spinner-border"></div>
+          {loading ? (<div className="spinner-border"></div>
           ) : (
             retrievedCategories?.map((item) => (
               <DisplayCategories item={item} key={item.id} />
