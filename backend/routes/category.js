@@ -3,10 +3,12 @@ const router = express.Router();
 
 const { createCategory, getCategories, categoryDetails, deleteCategory } = require('../controllers/categorycontroller');
 
-router.route('/category').post(createCategory);
-router.route('/home').get(getCategories);
-router.route('/home/:id').get(categoryDetails);
-router.route('/home/:id').delete(deleteCategory);
+const { isAuthenticatedUser } = require('../middleware/auth');
+
+router.route('/category').post(isAuthenticatedUser, createCategory);
+router.route('/home').get(isAuthenticatedUser, getCategories);
+router.route('/home/:id').get(isAuthenticatedUser, categoryDetails);
+router.route('/home/:id').delete(isAuthenticatedUser, deleteCategory);
 
 
 
