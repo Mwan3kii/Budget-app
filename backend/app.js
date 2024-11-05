@@ -6,6 +6,7 @@ const cors = require('cors');
 app.use(express.json());
 const transaction = require('./routes/transaction');
 const cookieParser = require('cookie-parser');
+const home = require('./routes/homepage');
 const bodyParser = require('body-parser');
 
 const corsOptions = {
@@ -29,5 +30,6 @@ app.use(cookieParser());
 app.use('/api/v1', auth);
 app.use('/api/v1', category);
 app.use('/api/v1', transaction);
+app.use(home);
 
 module.exports = app;
