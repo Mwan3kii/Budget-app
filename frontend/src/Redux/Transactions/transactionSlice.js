@@ -11,7 +11,13 @@ const initialState = {
 export const createTransaction = createAsyncThunk('displayTransaction', async ({id, transactionData})=> {
     const baseAPI = 'http://localhost:4000/api/v1/home';
         try {
-            const response = await axios.post(`${baseAPI}/${id}/transaction`, transactionData);
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true, // Include cookies with the request
+            };
+            const response = await axios.post(`${baseAPI}/${id}/transaction`, transactionData, config);
             const singleProd = response.data;
             return { ...singleProd, categoryId: id };
         } catch (error) {
